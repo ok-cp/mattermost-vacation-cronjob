@@ -4,6 +4,7 @@ const fs = require('fs');
 const qs = require('querystring');
 const router = require('express').Router();
 const Huga = require('../models/huga');
+const Check = require('./check');
 const token = process.env.TOKEN;
 
 // Find All
@@ -44,6 +45,8 @@ router.post('/', (req, res) => {
        //  Huga.published_date = new Date(req.body.published_date);
     }
     console.log(data);
+    Check.checkHugadate(data.hugadate,res);
+    Check.checkHugaName(data.huga,res);
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.write('{"text":"Registered :palm_tree: '+value[0]+' '+value[1]+'"}');
