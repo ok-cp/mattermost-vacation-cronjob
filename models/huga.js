@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 // Define Schemes
 const hugaSchema = new mongoose.Schema({
-  huga: { type: String, required: true, unique: true },
-  name: { type: String, required: true, unique: true },
-  hugadate: { type: String, required: true, unique: true },
+  huga: { type: String, required: true, unique: false },
+  name: { type: String, required: true, unique: false },
+  hugadate: { type: String, required: true, unique: false },
   completed: { type: String, default: false }
 },
 {

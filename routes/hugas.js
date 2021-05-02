@@ -1,5 +1,10 @@
+require('dotenv').config();
+
+const fs = require('fs');
+const qs = require('querystring');
 const router = require('express').Router();
 const Huga = require('../models/huga');
+const token = process.env.TOKEN;
 
 // Find All
 router.get('/', (req, res) => {
@@ -23,13 +28,36 @@ router.get('/hugadate/:hugadate', (req, res) => {
 
 // Create new huga document
 router.post('/', (req, res) => {
-  Huga.huga = req.body.huga;
-  Huga.date = req.body.date;
-//  Huga.published_date = new Date(req.body.published_date);
+  console.log(req.headers)
+  console.log(req.body)
+  if (req.headers.authorization == "Token "+token){
+    console.log("#####Successed#####")
+    console.log(req.body.text)
+    console.log(`statusCode: ${res.statusCode}`)
 
-  Huga.create(req.body)
-    .then(huga => res.send(huga))
-    .catch(err => res.status(500).send(err));
+    value=req.body.text.split(" ");
+
+    let data = {
+       huga : value[0],
+       name : req.body.user_name,
+       hugadate : value[1]
+       //  Huga.published_date = new Date(req.body.published_date);
+    }
+    console.log(data);
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.write('{"text":"Registered :palm_tree: '+value[0]+' '+value[1]+'"}');
+    Huga.create(data)
+        .then(huga => {
+	   console.log(huga)
+           res.send(huga)
+	})
+        .catch(err => res.status(500).send(err));
+    res.end();
+  }else{
+    console.log("Wrong Token!!!!!")
+  }
+  
 });
 
 // Update by hugadate
