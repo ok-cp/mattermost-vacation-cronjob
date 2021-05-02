@@ -23,6 +23,10 @@ router.get('/todoid/:todoid', (req, res) => {
 
 // Create new todo document
 router.post('/', (req, res) => {
+  Todo.todoid = req.body.todoid;
+  Todo.content = req.body.content;
+//  Todo.published_date = new Date(req.body.published_date);
+
   Todo.create(req.body)
     .then(todo => res.send(todo))
     .catch(err => res.status(500).send(err));

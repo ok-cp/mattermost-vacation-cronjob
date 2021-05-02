@@ -18,7 +18,10 @@ app.use(bodyParser.json());
 mongoose.Promise = global.Promise;
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
+mongoose.connect(process.env.MONGO_URI, { 
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+  })
   .then(() => console.log('Successfully connected to mongodb'))
   .catch(e => console.error(e));
 
