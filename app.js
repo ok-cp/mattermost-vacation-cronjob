@@ -26,6 +26,6 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch(e => console.error(e));
 
 // ROUTERS
-app.use('/todos', require('./routes/todos'));
+app.use('/hugas', require('./routes/hugas'));
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
